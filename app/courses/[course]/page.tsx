@@ -17,7 +17,6 @@ const CoursePage = ({ params: { course } }: { params: { course: string } }) => (
         <IoArrowBack />
       </Link>
       <Suspense fallback={<CourseContentSkeleton />}>
-        {/* @ts-expect-error Async Server Component */}
         <CourseContent slug={course} />
       </Suspense>
     </Box>
