@@ -2,12 +2,14 @@
 
 import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { FaGithub } from "react-icons/fa";
 
 type Props = {};
 
 const Login = (props: Props) => {
   const { data: session } = useSession();
+  const router = useRouter();
   const handleSignIn = async () => {
     try {
       await signIn("github");
@@ -23,6 +25,10 @@ const Login = (props: Props) => {
       console.error(error);
     }
   };
+
+  if (session?.user) {
+    router.push("/");
+  }
 
   return (
     <Flex align="center" justify="center" minH="100vh">
