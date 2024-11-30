@@ -1,12 +1,13 @@
 "use client";
 
 import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
-import { signIn, signOut } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { FaGithub } from "react-icons/fa";
 
 type Props = {};
 
 const Login = (props: Props) => {
+  const { data: session } = useSession();
   const handleSignIn = async () => {
     try {
       await signIn("github");
@@ -32,17 +33,29 @@ const Login = (props: Props) => {
         <Text textAlign="center" mb={6}>
           Login to access your account
         </Text>
-        <Button
-          w="full"
-          size="lg"
-          colorScheme="gray"
-          variant="outline"
-          leftIcon={<FaGithub />}
-          onClick={() => handleSignIn()}
-        >
-          Sign in with GitHub
-        </Button>
-        <Button onClick={() => signOut()}>Sign Out</Button>
+        {session?.user ? (
+          <Button
+            w="full"
+            size="lg"
+            colorScheme="gray"
+            variant="outline"
+            leftIcon={<FaGithub />}
+            onClick={() => handleSignOut()}
+          >
+            Sign Out
+          </Button>
+        ) : (
+          <Button
+            w="full"
+            size="lg"
+            colorScheme="gray"
+            variant="outline"
+            leftIcon={<FaGithub />}
+            onClick={() => handleSignIn()}
+          >
+            Sign in with GitHub
+          </Button>
+        )}
       </Box>
     </Flex>
   );
