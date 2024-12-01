@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getProgressData, getUserByEmail } from "@/lib/api";
 import { auth } from "@/auth";
 import { getLessonCollectionTotal } from "@/app/courses/[course]/helpers";
 
-export const POST = async (req: NextRequest) => {
+export async function GET(req: NextRequest) {
   const { sectionId } = await req.json();
   const session = await auth();
 
@@ -23,4 +22,4 @@ export const POST = async (req: NextRequest) => {
       { status: 500 },
     );
   }
-};
+}
