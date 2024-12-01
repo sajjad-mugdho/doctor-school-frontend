@@ -10,7 +10,12 @@ type Props = {};
 const Login = (props: Props) => {
   const { data: session } = useSession();
   const router = useRouter();
-  const handleSignIn = async () => {
+  if (session?.user) {
+    return router.push("/");
+  }
+
+  const handleSignIn = async (e: any) => {
+    e.preventDefault();
     try {
       await signIn("github");
     } catch (error) {
@@ -18,17 +23,14 @@ const Login = (props: Props) => {
     }
   };
 
-  const handleSignOut = async () => {
+  const handleSignOut = async (e: any) => {
+    e.preventDefault();
     try {
       await signOut();
     } catch (error) {
       console.error(error);
     }
   };
-
-  if (session?.user) {
-    router.push("/");
-  }
 
   return (
     <Flex align="center" justify="center" minH="100vh">
@@ -46,7 +48,7 @@ const Login = (props: Props) => {
             colorScheme="gray"
             variant="outline"
             leftIcon={<FaGithub />}
-            onClick={() => handleSignOut()}
+            onClick={(e) => handleSignOut(e)}
           >
             Sign Out
           </Button>
@@ -57,7 +59,7 @@ const Login = (props: Props) => {
             colorScheme="gray"
             variant="outline"
             leftIcon={<FaGithub />}
-            onClick={() => handleSignIn()}
+            onClick={(e) => handleSignIn(e)}
           >
             Sign in with GitHub
           </Button>

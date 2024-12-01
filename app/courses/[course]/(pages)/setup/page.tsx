@@ -110,7 +110,7 @@ const SetupPage = async ({ params }: { params: { course: string } }) => {
           fontWeight: "bold",
           textAlign: "center",
           textShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
-          background: "linear-gradient(to right, #007bff, #0056b3)",
+
           borderRadius: "10px",
         }}
       >
